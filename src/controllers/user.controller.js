@@ -6,7 +6,7 @@ const secretKey = process.env.SECRET_KEY;
 module.exports = {
   signUp: async (req, res) => {
     try {
-      const { email, password, name } = req.body;
+      const { email, password, name, phone } = req.body;
 
       const salt = await bcrypt.genSalt(10);
       const hashedPassword = await bcrypt.hash(password, salt);
@@ -15,6 +15,7 @@ module.exports = {
         email: email,
         password: hashedPassword,
         name: name,
+        phone: phone,
       });
 
       await user.save();
