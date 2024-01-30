@@ -40,3 +40,26 @@ API for websites to post real estate for sale and rent.
 
 - Endpoint: `/api/v1/user?email=<email>`
 - Method: GET
+
+### 4. Get loged in user's information:
+
+- Endpoint: `/api/v1/user/info`
+- Method: GET
+- Header: `Authorization: Bearer ${your_token}`
+
+### 5. Update loged in user's information:
+
+- Endpoint: `/api/v1/user/info`
+- Method: POST
+- Header: `Authorization: Bearer ${your_token}`
+- Request Body:
+  ```json
+  {
+    "name": String,
+    "phone": {
+      "country": String,
+      "number": String
+    },
+    "address": String
+  }
+  ```
