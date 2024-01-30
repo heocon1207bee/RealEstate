@@ -11,17 +11,17 @@ API for websites to post real estate for sale and rent.
 - Request Body:
   ```json
   {
-    "email": "String",
-    "password": "String",
-    "name": "String",
+    "email": String,
+    "password": String,
+    "name": String,
     "phone": {
-      "country": "String",
-      "number": "String"
+      "country": String,
+      "number": String
     }
   }
   ```
-- Password: min 6 digits, max 50 digits
-- Name: max 250 digits
+- Password: between 6 and 100 characters
+- Name: max 250 characters
 - Country Enum: ["vietnam", "laos", "cambodia"]
 
 ### 2. Log in
@@ -63,3 +63,4 @@ API for websites to post real estate for sale and rent.
     "address": String
   }
   ```
+- Address: max 250 characters

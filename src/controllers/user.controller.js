@@ -10,6 +10,11 @@ module.exports = {
     try {
       const { email, password, name, phone } = req.body;
 
+      const isPasswordValid = password.match(/^.{6,100}$/);
+      if (!isPasswordValid) {
+        res.status(400).send("Password must be between 6 and 100 characters");
+      }
+
       const salt = await bcrypt.genSalt(10);
       const hashedPassword = await bcrypt.hash(password, salt);
 

@@ -12,10 +12,10 @@ const userSchema = new mongoose.Schema({
   name: { type: String, required: true, maxlength: 250 },
   phone: {
     country: { type: String, enum: countryEnum, default: "vietnam" },
-    number: { type: Number, required: true },
+    number: { type: Number, required: true, maxlength: 20 },
   },
   admin: { type: Boolean, default: false },
-  address: { type: String },
+  address: { type: String, maxlength: 250 },
   avatar: { type: String },
 });
 
