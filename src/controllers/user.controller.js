@@ -81,8 +81,8 @@ module.exports = {
       if (!user) {
         return res.status(404).jsend("e", "User not found");
       }
-      const { email, name, phone, address, avatar } = user;
-      return res.status(200).jsend("", "", { email, name, phone, address, avatar });
+      const { email, name, phone, address, avatar, birthday } = user;
+      return res.status(200).jsend("", "", { email, name, phone, address, avatar, birthday });
     } catch (err) {
       return res.status(500).jsend("e", "Something went wrong", err.message);
     }
