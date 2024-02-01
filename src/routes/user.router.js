@@ -9,4 +9,6 @@ router.post("/signup", userController.signUp);
 router.post("/login", userController.logIn);
 router.post("/info", userController.updateUserInfo);
 
+router.delete("/delete", userController.deleteUser);
+
 module.exports = router;

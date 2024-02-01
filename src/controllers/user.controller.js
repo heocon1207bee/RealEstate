@@ -44,6 +44,9 @@ module.exports = {
       if (!user) {
         return res.status(401).send("User is not exist");
       }
+      if (user.banned) {
+        return res.status(403).send("User is banned");
+      }
 
       const isPasswordValid = await bcrypt.compare(password, user.password);
       if (!isPasswordValid) {
@@ -86,7 +89,7 @@ module.exports = {
   },
   updateUserInfo: async (req, res) => {
     try {
-      const { name, phone, address, avatar } = req.body;
+      const { name, phone, address, avatar, birthday } = req.body;
 
       if (req.body.email) {
         return res.status(403).send("Can not update email");
@@ -104,7 +107,12 @@ module.exports = {
         return res.status(401).send("Invalid token");
       }
 
-      const updatedUser = await User.findOneAndUpdate(
+      const user = await User.findById(decodedToken.userId);
+      if (!user) {
+        return res.status(404).send("User not found");
+      }
+
+      const updated = await User.findOneAndUpdate(
         { _id: decodedToken.userId },
         {
           $set: {
@@ -115,19 +123,44 @@ module.exports = {
               country: phone.country || user.phone.country,
               number: phone.number || user.phone.number,
             },
+            birthday: birthday || user.birthday,
           },
         },
         { new: true }
       );
 
-      if (!updatedUser) {
+      if (!updated) {
         return res.status(404).send("User not found");
       }
-
+      const updatedUser = {
+        name: updated.name,
+        address: updated.address,
+        avatar: updated.avatar,
+        phone: updated.phone,
+        birthday: updated.birthday,
+      };
       return res.status(200).json({ message: "User informations updated", user: updatedUser });
     } catch (err) {
       console.error(err);
       return res.status(500).json({ message: "Internal Server Error", error: err });
+    }
+  },
+  deleteUser: async (req, res) => {
+    try {
+      const token = req.headers.authorization.split(" ")[1];
+
+      const decodedToken = jwt.verify(token, secretKey);
+      if (!decodedToken || !decodedToken.userId) {
+        return res.status(404).send("Invalid token");
+      }
+
+      await User.findByIdAndDelete(decodedToken.userId).catch((err) => {
+        return res.status(400).send("Could not delete user");
+      });
+
+      return res.status(200).send("User deleted");
+    } catch (err) {
+      return res.status(500).send("Internal Server Error");
     }
   },
 };
