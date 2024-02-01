@@ -2,9 +2,6 @@ const mongoose = require("mongoose");
 const bcrypt = require("bcrypt");
 
 const countryEnum = ["vietnam", "laos", "cambodia"];
-function validatePassword(password) {
-  return password.length >= 6 && password.length <= 100;
-}
 
 const userSchema = new mongoose.Schema({
   email: { type: String, required: true, unique: true, match: /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/ },
@@ -20,14 +17,15 @@ const userSchema = new mongoose.Schema({
   birthday: {
     type: Date,
     required: true,
-    validator: {
-      validate: function (val) {
+    validate: {
+      validator: function (val) {
         return val < new Date();
       },
       message: "Birthday must be less than today",
     },
   },
-  baned: { type: Boolean, default: false },
+  created: { type: Date, value: new Date() },
+  banned: { type: Boolean, default: false },
 });
 
 module.exports = mongoose.model("User", userSchema);
