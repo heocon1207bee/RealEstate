@@ -17,12 +17,14 @@ API for websites to post real estate for sale and rent.
     "phone": {
       "country": String,
       "number": String
-    }
+    },
+    "birthday": Date,
   }
   ```
 - Password: between 6 and 100 characters
 - Name: max 250 characters
 - Country Enum: ["vietnam", "laos", "cambodia"]
+- Birthday: YYYY-MM-DD
 
 ### 2. Log in
 
@@ -60,7 +62,11 @@ API for websites to post real estate for sale and rent.
       "country": String,
       "number": String
     },
-    "address": String
+    "address": String,
+    "birthday": Date,
   }
   ```
+- Name: max 250 characters
+- Country Enum: ["vietnam", "laos", "cambodia"]
+- Birthday: YYYY-MM-DD
 - Address: max 250 characters
