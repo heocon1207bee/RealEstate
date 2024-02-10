@@ -1,6 +1,5 @@
 const User = require("../models/user.model");
 const bcrypt = require("bcrypt");
-const { response } = require("express");
 const jwt = require("jsonwebtoken");
 require("dotenv").config();
 const secretKey = process.env.SECRET_KEY;
